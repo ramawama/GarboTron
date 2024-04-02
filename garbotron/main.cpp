@@ -6,7 +6,7 @@
 const int TRIG = 4;
 const int ECHO = 24;
 
-Sensor garbotron(100);
+Sensor garbotron(20);
 
 void setup() {
     if (gpioInitialise() < 0) {
@@ -52,8 +52,11 @@ int main() {
     setup();
 
     while (true) {
-        double distance = measureDistance();
-        std::cout << "Distance: " << distance << " cm" << std::endl;
+        //double distance = measureDistance();
+        garbotron.set_distance(measureDistance());
+        garbotron.update_trash();
+        std::cout << "Distance: " << garbotron.get_distance() << " cm" << std::endl;
+        std::cout << "Percent of trashcan filled: " << garbotron.get_trash_percent() << "%" << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(1)); // Measure every second
     }
 

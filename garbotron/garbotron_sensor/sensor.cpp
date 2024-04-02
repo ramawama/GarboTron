@@ -3,12 +3,13 @@
 #include <pigpio.h>
 #include <chrono>
 #include <thread>
+#include <cmath>
 
 class Sensor {
     private:
         double distance;
         double max_distance; // in cm
-        int percent_full; // relative to max_distance
+        double percent_full; // relative to max_distance
         
     public:
     Sensor() {
@@ -28,10 +29,10 @@ class Sensor {
     double get_distance() { return distance; }
     
     void update_trash() {
-        percent_full = distance / max_distance;
+        percent_full = floor(100 - ((distance / max_distance) * 100));
     }
 
-    int get_trash_percent() { return percent_full; }
+    double get_trash_percent() { return percent_full; }
 
 
 };
