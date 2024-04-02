@@ -3,6 +3,11 @@
 #include <pigpio.h>
 #include <chrono>
 #include <thread>
+#include <string>
+#include <cstring>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
 #include <cmath>
 
 class Sensor {

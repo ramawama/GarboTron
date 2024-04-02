@@ -1,4 +1,5 @@
 #pragma once
+
 #include "garbotron_sensor/sensor.cpp"
 
 //trig gpio 4
@@ -50,16 +51,36 @@ double measureDistance() {
 
 int main() {
     setup();
+    
+    int client_fd = socket(AF_INET, SOCK_STREAM, 0);
+    // Set up the server address
+    sockaddr_in server_addr;
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = inet_addr("192.168.137.171"); // Server Raspberry Pi's IP address
+    server_addr.sin_port = htons(8080);
 
-    while (true) {
+    // Connect to the server
+    connect(client_fd, (sockaddr*)&server_addr, sizeof(server_addr));
+    bool running = true;
+    while (running) {
         //double distance = measureDistance();
         garbotron.set_distance(measureDistance());
         garbotron.update_trash();
         std::cout << "Distance: " << garbotron.get_distance() << " cm" << std::endl;
         std::cout << "Percent of trashcan filled: " << garbotron.get_trash_percent() << "%" << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1)); // Measure every second
-    }
+        std::this_thread::sleep_for(std::chrono::seconds(5)); // Measure every second
+        // Simulate distance data (replace with your actual distance sensor code)
+        std::string percent = std::to_string(garbotron.get_trash_percent());
 
+        // Send the distance data
+        send(client_fd, percent.c_str(), percent.length(), 0);
+    }
+    
+
+    
+
+    // Close the socket
+    close(client_fd);
     gpioTerminate(); // Should ideally be called on program exit
     return 0;
 }
