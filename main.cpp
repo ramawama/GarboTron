@@ -104,6 +104,8 @@ void writeDistance(int x, int y, double distance) {
     const char* distanceChars = distanceString.c_str();
     char nonConstBuffer[distanceString.length() + 1];
     strcpy(nonConstBuffer, distanceChars);
+    clear();
+    write(0, 0, "Distance: ");
     write(x, y, nonConstBuffer);
 }
 
@@ -158,7 +160,6 @@ int main() {
 
     std::cout << "Accepted connection from " << inet_ntoa(client_addr.sin_addr) << std::endl;
 
-    write(0, 0, "Distance: ");
 
     while (true) {
         // Receive the distance data
