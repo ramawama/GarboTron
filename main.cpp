@@ -3,7 +3,13 @@
 #include <string.h>
 #include <wiringPi.h> 
 #include <wiringPiI2C.h>
-
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <sstream>
 
 int LCDAddr = 0x27;
 int BLEN = 1;
@@ -91,13 +97,95 @@ void write(int x, int y, char data[]){
     }
 }
 
-int main(){
+void writeDistance(int x, int y, double distance) {
+    std::ostringstream oss;
+    oss << distance << " %";
+    std::string distanceString = oss.str();
+    const char* distanceChars = distanceString.c_str();
+    char nonConstBuffer[distanceString.length() + 1];
+    strcpy(nonConstBuffer, distanceChars);
+    write(x, y, nonConstBuffer);
+}
+
+
+int main() {
+    int LCDAddr = 0x27; // Assuming this is the I2C address of your LCD
+
     fd = wiringPiI2CSetup(LCDAddr);
     init();
     write(0, 0, "Greetings!");
     write(1, 1, "From SunFounder");
-    delay(2000);
+    delay(3000);
     clear();
+
+
+
+    // Create a socket file descriptor
+    int server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (server_fd == -1) {
+        std::cerr << "Failed to create socket" << std::endl;
+        return 1;
+    }
+
+    // Set up the server address
+    sockaddr_in server_addr;
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+    server_addr.sin_port = htons(8080);
+
+    // Bind the socket to the server address
+    if (bind(server_fd, (sockaddr*)&server_addr, sizeof(server_addr)) == -1) {
+        std::cerr << "Failed to bind socket" << std::endl;
+        return 1;
+    }
+
+    // Listen for incoming connections
+    if (listen(server_fd, 5) == -1) {
+        std::cerr << "Failed to listen on socket" << std::endl;
+        return 1;
+    }
+
+    std::cout << "Server listening on port 8080" << std::endl;
+
+    // Accept a new connection
+    sockaddr_in client_addr;
+    socklen_t client_len = sizeof(client_addr);
+    int client_fd = accept(server_fd, (sockaddr*)&client_addr, &client_len);
+    if (client_fd == -1) {
+        std::cerr << "Failed to accept connection" << std::endl;
+        return 1;
+    }
+
+    std::cout << "Accepted connection from " << inet_ntoa(client_addr.sin_addr) << std::endl;
+
+    write(0, 0, "Distance: ");
+
+    while (true) {
+        // Receive the distance data
+        char buffer[1024];
+        memset(buffer, 0, sizeof(buffer));
+        ssize_t bytes_received = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
+        if (bytes_received == -1) {
+            std::cerr << "Failed to receive data" << std::endl;
+            break;
+        } else {
+            std::string distanceString(buffer, bytes_received);
+            std::istringstream iss(distanceString);
+            double distance;
+            iss >> distance;
+            if (iss.fail()) {
+                std::cerr << "Error converting received data to double" << std::endl;
+            } else {
+                std::cout << "Received distance: " << distance << std::endl;
+                writeDistance(1, 1, distance);
+            }
+        }
+    }
+
+    // Close the server socket
+    close(server_fd);
+
+    return 0;
 }
 
 
