@@ -1,0 +1,225 @@
+{
+  "Atlas_IoTDDL": {
+    "Atlas_Thing": {
+      "Descriptive_Metadata": {
+        "Thing_ATID": "group15-garbotron",
+        "Thing_Name": "Garbo Tron",
+        "Thing_Owner": "Coomes",
+        "Thing_Vendor": "Coomes Industries",
+        "Thing_Model": "Garbo-Tron-v0",
+        "Thing_ReleaseDate": "04/2024",
+        "Thing_Type": "Thing of Things",
+        "Thing_OperatingSystem": "Raspbian",
+        "Thing_ShortDescription": "Our thing utilizes the ultrasonic ranging module connected to our Raspberry Pi. This device allows us to provide stable distance readings with high accuracy. We can detect distances between 2 cm and 450 cm with a precision of up to 3mm. It also utilizes an i2c LCD 1602 screen to display the results.",
+        "LongDescription": "",
+        "Thing_SSID": "Visionary Nexus Hub",
+        "Space_Coordinates": "(29.6465, -82.3533)",
+        "Space_Name": "Kitchen",
+        "Space_Description": "Visionary Nexus Hub: the beginnings of humanity's foray into the next world. We aim to connect facets of human life to our technologically advanced counterparts, starting at the humble trash can, intertwining the mundane reality with our exciting future.",
+        "Space_Constraints": {
+          "Temperature": {
+            "Lower_Bound": "32F",
+            "Upper_Bound": "80F"
+          },
+          "Humidity": {
+            "Lower_Bound": "0%",
+            "Upper_Bound": "80%"
+          },
+          "Voltage": {
+            "Lower_Bound": "4.75V",
+            "Upper_Bound": "5.25V"
+          },
+          "Radio_Interference_Radius": "",
+          "Safe_Temperature_Radius": ""
+        }
+      },
+      "Administrative_Metadata": {
+        "Network_Manager": {
+          "Module": "WiFi",
+          "Type": "Built-In",
+          "Network_Name": "patricknetwork",
+          "Network_Passcode": "mobilecomp",
+          "MulticastGroup": {
+            "IP": "192.168.137.1",
+            "Port": 8080
+          },
+          "Communication_Protocol": "Sockets",
+          "InterOperableCommunication": {
+            "Broker": {
+              "Vendor": "Eduroam",
+              "Dashboard": "https://www.ufl.edu/",
+              "IP": "10.136.6.100",
+              "Port": ""
+            },
+            "Topic": {
+              "Root": "/Atlas",
+              "Network_MQTTClient": "/Network/MQTT_Client",
+              "Network_PrivateBroker": "/Network/Private_Broker",
+              "Multicast_ThingIdentity": "/Multicast/Tweet_ThingIdentity",
+              "Multicast_EntityIdentity": "/Multicast/Tweet_EntityIdentity",
+              "Multicast_API": "/Multicast/API",
+              "Unicast": "/Unicast/Interaction"
+            }
+          },
+          "OMA_DM": {
+            "AccessName": "",
+            "IP": "",
+            "Port": ""
+          }
+        },
+        "Memory_Manager": {
+          "Store_Format": "",
+          "MemoryUnit_Application": "",
+          "MemoryUnit_Knowledge": ""
+        }
+      },
+      "Thing_Attachment": "",
+      "Structural_Metadata": {
+        "Number_Hardware": 2,
+        "Number_Software": 0,
+        "Number_Hybrid": 0,
+        "Number_Entities": 2
+      }
+    },
+    "Atlas_Entities": {
+      "Entity_1": {
+        "Descriptive_Metadata": {
+          "ID": "sensor",
+          "Name": "GarboTron Sensor",
+          "Owner": "Coomes",
+          "Vendor": "Coomes Industries",
+          "Category": "Hardware",
+          "Type": "Connected",
+          "Description": "One part of the Garbo Tron device,  provides stable distance readings with high accuracy."
+        },
+        "Services": {
+          "Service_1": {
+            "Name": "getDistance",
+            "AppCategory": "Cleaning",
+            "Type": "Report",
+            "Keywords": "",
+            "Description": "Detects the distance of the actuator from the sensor, to tell how full a garbage can is.",
+            "Contextual_Constraints": {
+              "Time_Window": "5seconds",
+              "Usage_Mode": "Single",
+              "Concurrent": "Yes"
+            },
+            "Temporal_Constraints": {
+              "Working": {
+                "StartTime": "",
+                "EndTime": ""
+              },
+              "Callable": {
+                "StartTime": "",
+                "EndTime": ""
+              }
+            },
+            "OutputDescription": "Distance",
+            "OutputType": "int",
+            "Service_Formula": {
+              "__cdata": "\n\n"
+            },
+            "Service_NumberInputs": 0,
+            "Service_InputTypes": "",
+            "Service_InputDescriptions": ""
+          },
+          "Service_2": {
+            "Name": "distanceLength",
+            "AppCategory": "Cleaning",
+            "Type": "Report",
+            "Keywords": "",
+            "Description": "Returns the distance of the sensor in CM",
+            "Contextual_Constraints": {
+              "Time_Window": "",
+              "Usage_Mode": "",
+              "Concurrent": ""
+            },
+            "Temporal_Constraints": {
+              "Working": {
+                "StartTime": "",
+                "EndTime": ""
+              },
+              "Callable": {
+                "StartTime": "",
+                "EndTime": ""
+              }
+            },
+            "OutputDescription": "",
+            "OutputType": "void",
+            "Service_Formula": {
+              "__cdata": "\n\n"
+            },
+            "Service_NumberInputs": 0,
+            "Service_InputTypes": "",
+            "Service_InputDescriptions": ""
+          },
+          "Service_3": {
+            "Name": "",
+            "AppCategory": "",
+            "Type": "",
+            "Keywords": "",
+            "Description": "",
+            "Contextual_Constraints": {
+              "Time_Window": "30seconds",
+              "Usage_Mode": "",
+              "Concurrent": ""
+            },
+            "Temporal_Constraints": {
+              "Working": {
+                "StartTime": "6am",
+                "EndTime": "10pm"
+              },
+              "Callable": {
+                "StartTime": "6:30am",
+                "EndTime": "9:30pm"
+              }
+            },
+            "OutputDescription": "",
+            "OutputType": "void",
+            "Service_Formula": {
+              "__cdata": "\n\u0001\u0001\n"
+            },
+            "Service_NumberInputs": 0,
+            "Service_InputTypes": "",
+            "Service_InputDescriptions": ""
+          },
+          "Number_Services": 3
+        },
+        "Relationships": {
+          "Relationship_1": {
+            "Name": "Sensor to Actuator",
+            "Establisher": "TCP",
+            "Description": "",
+            "type": "control",
+            "Input1": "getDistance",
+            "Input2": "distanceLength"
+          },
+          "Number_Relationships": 1
+        },
+        "UnboundedService": {
+          "Number_UnboundedServices": 0
+        }
+      },
+      "Entity_2": {
+        "Descriptive_Metadata": {
+          "ID": "actuator",
+          "Name": "GarboTron Actuator",
+          "Owner": "Coomes",
+          "Vendor": "Coomes Industries",
+          "Category": "Hardware",
+          "Type": "Remote",
+          "Description": "We can detect distances between 2 cm and 450 cm with a precision of up to 3mm."
+        },
+        "Services": {
+          "Number_Services": 0
+        },
+        "UnboundedService": {
+          "Number_UnboundedServices": 0
+        },
+        "Relationships": {
+          "Number_Relationships": 0
+        }
+      }
+    }
+  }
+}
