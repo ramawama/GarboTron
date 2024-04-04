@@ -71,10 +71,13 @@ int main() {
     int time = 5;
 
 
-    displayMenu();
-    std::cin >> input;
+    
 
     while(running){
+        displayMenu();
+        std::cin >> input;
+        std::cin.clear();
+
         switch (input){
         case 1:
             std::cout << "Please input the length in cm" << std::endl;
@@ -116,8 +119,10 @@ int main() {
         default:
             std::cout << "Invalid Input! Try again." << std::endl;
         }
+        std::cin.clear();
+
     }
-    
+    running = true;
     setup();
     
     int client_fd = socket(AF_INET, SOCK_STREAM, 0);
