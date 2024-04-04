@@ -1,0 +1,14 @@
+--- lib/CppMicroServices-development/CMakeLists.txt
++++ lib/CppMicroServices-development/CMakeLists.txt
+@@ -506,9 +506,9 @@ endif()
+ add_subdirectory(third_party/absl)
+ #-----------------------------------------------------------------------------
+ 
+-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${US_CXX_FLAGS}")
++set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${US_CXX_FLAGS} -fPIC -Wno-error=deprecated-declarations")
+ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${US_CXX_FLAGS_RELEASE}")
+-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${US_C_FLAGS}")
++set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${US_C_FLAGS} -fPIC")
+ set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} ${US_C_FLAGS_RELEASE}")
+ 
+ #-----------------------------------------------------------------------------

@@ -1,0 +1,11 @@
+--- lib/CppMicroServices-development/compendium/DeclarativeServices/src/metadata/ReferenceMetadata.cpp
++++ lib/CppMicroServices-development/compendium/DeclarativeServices/src/metadata/ReferenceMetadata.cpp
+@@ -23,6 +23,8 @@
+ #include "ReferenceMetadata.hpp"
+ #include "Util.hpp"
+ 
++#include <limits>
++
+ namespace cppmicroservices {
+ namespace scrimpl {
+ namespace metadata {

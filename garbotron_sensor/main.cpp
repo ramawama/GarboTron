@@ -1,6 +1,6 @@
 #pragma once
 
-#include "garbotron_sensor/sensor.cpp"
+#include "sensor.cpp"
 
 //trig gpio 4
 //echo gpio 24
