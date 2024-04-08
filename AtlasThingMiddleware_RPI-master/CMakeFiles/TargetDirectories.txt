@@ -1,0 +1,3 @@
+/home/pi/Documents/GarboTron/AtlasThingMiddleware_RPI-master/CMakeFiles/Atlas.dir
+/home/pi/Documents/GarboTron/AtlasThingMiddleware_RPI-master/CMakeFiles/edit_cache.dir
+/home/pi/Documents/GarboTron/AtlasThingMiddleware_RPI-master/CMakeFiles/rebuild_cache.dir
