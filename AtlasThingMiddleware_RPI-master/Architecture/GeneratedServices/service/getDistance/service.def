@@ -1,0 +1,3 @@
+autogen definitions service;
+name = getDistance;
+output = { name = Distance; type = "int"; };

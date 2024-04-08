@@ -1,0 +1,9 @@
+
+{
+	"bundle.symbolic_name": "distanceLength",
+	"bundle.activator":     true,
+	"bundle.name"         : "Service distanceLength",
+	"bundle.description"  : "This bundle is service type"
+}
+
+

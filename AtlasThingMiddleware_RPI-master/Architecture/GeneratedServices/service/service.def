@@ -1,0 +1,4 @@
+autogen definitions service;
+name = ;
+source = "";
+output = { type = void; };
