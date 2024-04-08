@@ -1,0 +1,9 @@
+
+{
+	"bundle.symbolic_name": "getDistance",
+	"bundle.activator":     true,
+	"bundle.name"         : "Service getDistance",
+	"bundle.description"  : "This bundle is service type"
+}
+
+
