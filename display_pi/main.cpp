@@ -11,22 +11,26 @@
 #include <unistd.h>
 #include <sstream>
 
-int LCDAddr = 0x27;
-int BLEN = 1;
-int fd;
+// Global vars for LCD 
+int LCDAddr = 0x27; // I2C addr
+int BLEN = 1; // backlight enabled 
+int fd; // File Descriptor
 
+// writes data to the I2C device 
 void write_word(int data){
     int temp = data;
     if ( BLEN == 1 )
-        temp |= 0x08;
+        temp |= 0x08; // enable backlight
     else
-        temp &= 0xF7;
+        temp &= 0xF7; // disables
     wiringPiI2CWrite(fd, temp);
 }
 
+// sends the command in bits to the I2C
 void send_command(int comm){
     int buf;
-    // Send bit7-4 firstly
+    // nibble = (half a bit) (0-15, one hex digit )
+    // Send bit7-4 firstly, high nibble first 
     buf = comm & 0xF0;
     buf |= 0x04;                    // RS = 0, RW = 0, EN = 1
     write_word(buf);
@@ -34,7 +38,7 @@ void send_command(int comm){
     buf &= 0xFB;                    // Make EN = 0
     write_word(buf);
 
-    // Send bit3-0 secondly
+    // Send bit3-0 secondly, low second 
     buf = (comm & 0x0F) << 4;
     buf |= 0x04;                    // RS = 0, RW = 0, EN = 1
     write_word(buf);
@@ -43,9 +47,10 @@ void send_command(int comm){
     write_word(buf);
 }
 
+// sends data to the I2C
 void send_data(int data){
     int buf;
-    // Send bit7-4 firstly
+    // Send bit7-4 firstly, same high first, low second 
     buf = data & 0xF0;
     buf |= 0x05;                    // RS = 1, RW = 0, EN = 1
     write_word(buf);
@@ -62,7 +67,7 @@ void send_data(int data){
     write_word(buf);
 }
 
-void init(){
+void init(){ //initialize the lcd display
     send_command(0x33);     // Must initialize to 8-line mode at first
     delay(5);
     send_command(0x32);     // Then initialize to 4-line mode
@@ -79,6 +84,7 @@ void clear(){
     send_command(0x01);     //clear Screen
 }
 
+// Function to write a string to a specific location on the LCD
 void write(int x, int y, char data[]){
     int addr, i;
     int tmp;
@@ -97,43 +103,44 @@ void write(int x, int y, char data[]){
     }
 }
 
+// writes the distance using stringstream given info from the sensorpi
 void writeDistance(int x, int y, double distance) {
     std::ostringstream oss;
-    oss << distance << " %";
-    std::string distanceString = oss.str();
-    const char* distanceChars = distanceString.c_str();
-    char nonConstBuffer[distanceString.length() + 1];
-    strcpy(nonConstBuffer, distanceChars);
-    clear();
-    write(0, 0, "Distance: ");
-    write(x, y, nonConstBuffer);
+    oss << distance << " %"; // Convert the distance to a string with a percentage symbol
+    std::string distanceString = oss.str(); // set the string equal to the string stream
+    const char* distanceChars = distanceString.c_str(); // set to c style string 
+    char nonConstBuffer[distanceString.length() + 1];  // create a buffer to hold the distance
+    strcpy(nonConstBuffer, distanceChars); // copy the distance C-style string to the buffer 
+    clear(); // clear the LCD display
+    write(0, 0, "Distance: "); // write "Distance: " at the top left of the LCD
+    write(x, y, nonConstBuffer); // write the distance at the specified position below
 }
 
 
 int main() {
     int LCDAddr = 0x27; // Assuming this is the I2C address of your LCD
 
-    fd = wiringPiI2CSetup(LCDAddr);
+    fd = wiringPiI2CSetup(LCDAddr); // set up I2C communication with the LCD
     init();
-    write(0, 0, "Greetings!");
+    write(0, 0, "Greetings!"); // source testing that it writes 
     write(1, 1, "From SunFounder");
     delay(3000);
     clear();
 
 
 
-    // Create a socket file descriptor
-    int server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    // Create a socket file descriptor for network communication setup 
+    int server_fd = socket(AF_INET, SOCK_STREAM, 0); // create a socket for IPv4 and TCP
     if (server_fd == -1) {
         std::cerr << "Failed to create socket" << std::endl;
-        return 1;
+        return 1; //exit if failed 
     }
 
     // Set up the server address
     sockaddr_in server_addr;
-    server_addr.sin_family = AF_INET;
-    server_addr.sin_addr.s_addr = INADDR_ANY;
-    server_addr.sin_port = htons(8080);
+    server_addr.sin_family = AF_INET; // IPv4 
+    server_addr.sin_addr.s_addr = INADDR_ANY; // listen on any networks interface 
+    server_addr.sin_port = htons(8080); // sets server port 
 
     // Bind the socket to the server address
     if (bind(server_fd, (sockaddr*)&server_addr, sizeof(server_addr)) == -1) {
@@ -141,12 +148,13 @@ int main() {
         return 1;
     }
 
-    // Listen for incoming connections
+    // Listen for incoming connections, max of 5 connectiosn 
     if (listen(server_fd, 5) == -1) {
         std::cerr << "Failed to listen on socket" << std::endl;
         return 1;
     }
 
+    // Display the IP address of the connected client
     std::cout << "Server listening on port 8080" << std::endl;
 
     // Accept a new connection
@@ -161,15 +169,17 @@ int main() {
     std::cout << "Accepted connection from " << inet_ntoa(client_addr.sin_addr) << std::endl;
 
 
-    while (true) {
+    while (true) { // runs until force terminated
         // Receive the distance data
-        char buffer[1024];
-        memset(buffer, 0, sizeof(buffer));
-        ssize_t bytes_received = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
+        char buffer[1024]; // buffer for recieving data 
+        memset(buffer, 0, sizeof(buffer)); //clear buffer 
+        ssize_t bytes_received = recv(client_fd, buffer, sizeof(buffer) - 1, 0); // recieve data from client 
         if (bytes_received == -1) {
             std::cerr << "Failed to receive data" << std::endl;
             break;
         } else {
+            // convert received data to a string, then to a double, and display it on the LCD
+
             std::string distanceString(buffer, bytes_received);
             std::istringstream iss(distanceString);
             double distance;
@@ -177,8 +187,8 @@ int main() {
             if (iss.fail()) {
                 std::cerr << "Error converting received data to double" << std::endl;
             } else {
-                std::cout << "Received distance: " << distance << std::endl;
-                writeDistance(1, 1, distance);
+                std::cout << "Received distance: " << distance << std::endl; // print distance
+                writeDistance(1, 1, distance); //write to lcd
             }
         }
     }
