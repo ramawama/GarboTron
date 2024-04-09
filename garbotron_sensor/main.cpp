@@ -1,4 +1,5 @@
 #include "sensor.cpp"
+#include "apis.cpp"
 
 //trig gpio 4
 //echo gpio 24
@@ -140,6 +141,18 @@ int main() {
         garbotron.update_trash();
         std::cout << "Distance: " << garbotron.get_distance() << " cm" << std::endl;
         std::cout << "Percent of trashcan filled: " << garbotron.get_trash_percent() << "%" << std::endl;
+        // 145-148 jsonifies depth of trashcan data
+        Json::Value depth;
+        depth["distance"] = std::to_string(garbotron.get_distance());
+        Json::StyledWriter writer; 
+    	std::string jsonData = writer.write(depth);
+        // 150-153 jsonifies percent of trash can filled
+        Json::Value percentJson;
+        percentJson["percent"] = std::to_string(garbotron.get_trash_percent());
+        Json::StyledWriter writerPercent;
+        std::string percentData = writerPercent.write(percentJson);
+        sendPutRequest("http://127.0.0.1:5000/garbotron/distance", jsonData);
+        sendPutRequest("http://127.0.0.1:5000/garbotron/percent", percentData);
         std::this_thread::sleep_for(std::chrono::seconds(time)); // Measure every second
         // Simulate distance data (replace with your actual distance sensor code)
         std::string percent = std::to_string(garbotron.get_trash_percent());
