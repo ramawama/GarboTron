@@ -2,121 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Garbotron Information</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        padding: 20px;
-      }
-      h1 {
-        color: #333;
-      }
-      .section {
-        margin-bottom: 30px;
-      }
-      .subsection {
-        margin-left: 20px;
-      }
-    </style>
+    <title>GarboTron Information</title>
   </head>
-  <body> 
+  <body>
     <button onclick="goToBodyPage()">Go Back</button>
-    <h1>Garbotron Information</h1>
+    <h1>GarboTron Info</h1>
+    <pre id="garbotron-json"></pre>
 
-    <div class="section">
-      <h2>Atlas IoTDDL</h2>
-      <div class="subsection">
-        <h3>Atlas Thing</h3>
-        <div class="subsection">
-            <h4>Descriptive Metadata</h4>
-            <p><strong>Thing ATID:</strong> group15-garbotron</p>
-            <p><strong>Thing Name:</strong> Garbotron</p>
-            <p><strong>Thing Owner:</strong> Coomes</p>
-            <p><strong>Thing Vendor:</strong> Coomes Industries</p>
-            <p><strong>Thing Model:</strong> Garbo-Tron-v0</p>
-            <p><strong>Thing Release Date:</strong> 04/2024</p>
-            <p><strong>Thing Type:</strong> Thing of Things</p>
-            <p><strong>Thing Operating System:</strong> Raspbian</p>
-            <p><strong>Thing Short Description:</strong> Our thing utilizes the ultrasonic ranging module connected to our Raspberry Pi. This device allows us to provide stable distance readings with high accuracy. We can detect distances between 2 cm and 450 cm with a precision of up to 3mm. It also utilizes an i2c LCD 1602 screen to display the results.</p>
-            <p><strong>Thing SSID:</strong> Visionary Nexus Hub</p>
-            <p><strong>Space Coordinates:</strong> (29.6465, -82.3533)</p>
-            <p><strong>Space Name:</strong> Kitchen</p>
-            <p><strong>Space Description:</strong> Visionary Nexus Hub: the beginnings of humanity's foray into the next world. We aim to connect facets of human life to our
-                technologically advanced counterparts, starting at the humble trash can, intertwining the mundane reality with our exciting future.</p>
-            <p><strong>Space Constraints:</strong></p>
-            <ul>
-              <li>Temperature: 32F - 80F</li>
-              <li>Humidity: 0% - 80%</li>
-              <li>Voltage: 4.75V - 5.25V</li>
-            </ul>
-        </div>
-        <div class="subsection">
-          <h4>Administrative Metadata</h4>
-          <p><strong>Network Manager:</strong></p>
-          <ul>
-            <li>Module: WiFi</li>
-            <li>Type: Built-In</li>
-            <li>Network Name: patricknetwork</li>
-            <li>Network Passcode: mobilecomp</li>
-            <li>Multicast Group IP:
-                <ul>
-                    <li>IP: 192.168.137.1 </li>
-                    <li>Port: 8080</li>
-                </ul>
-            </li>
-            <li>Communication Protocol: Sockets</li>
-            <li>InterOperable Communication:
-                <ul>
-                    <li>Broker Vendor: Eduroam</li>
-                    <li>Dashboard: <a href="https://www.ufl.edu/">https://www.ufl.edu/</a></li>
-                    <li>IP: 10.136.6.100 </li>
-                </ul>
-            </li>
-            <li>Topic:
-                <ul>
-                    <li>Root: /Atlas</li>
-                    <li>Network MQTTClient: /Network/MQTT_Client</li>
-                    <li>Network PrivateBroker: /Network/Private_Broker</li>
-                    <li>Multicast ThingIdentity: /Multicast/Tweet_ThingIdentity</li>
-                    <li>Multicast EntityIdentity: /Multicast/Tweet_EntityIdentity</li>
-                    <li>Multicast API: /Multicast/API</li>
-                    <li>Unicast: /Unicast/Interaction</li>
-                </ul>
-            </li>
-            <li>OMA DM:
-                <ul>
-                    <li>Access Name: </li>
-                    <li>IP: </li>
-                    <li>Port: </li>
-                </ul>
-            </li>
-            </ul>
-            <p><strong>Memory Manager:</strong></p>
-            <ul>
-                <li>Store Format: </li>
-                <li>Memory Unit Application: </li>
-                <li>Memory Unit Knowledge: </li>
-            </ul>
-
-
-      </div>
-        <div class="subsection">
-            <h4>Structural Metadata</h4>
-            <p><strong>Number Hardware:</strong> 2</p>
-            <p><strong>Number Software:</strong> 0</p>
-            <p><strong>Number Hybrid:</strong> 0</p>
-            <p><strong>Number Entities:</strong> 2</p>
-        </div>
-    </div>
-
+    <!-- Include your API JavaScript file -->
+    <script src="api.js"></script>
     <script>
-      
+      // Call the getInfo() function defined in api.js when the page loads
+      getInfo();
       function goToBodyPage() {
-        window.location.href = 'body.html'; 
-    }
+        window.location.href = "body.html";
+      }
     </script>
-
   </body>
 </html>

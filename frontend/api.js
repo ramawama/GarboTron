@@ -45,10 +45,17 @@ function getPercent() {
         return response.json();
       })
       .then(data => {
-        console.log('API Response:', data);
+        displayJson(data);
       })
       .catch(error => {
         console.error('Fetch Error:', error);
       });
+  }
+
+  function displayJson(jsonData) {
+    var jsonString = JSON.stringify(jsonData, null, 2);
+    jsonString = jsonString.replace(/[{},"]/g, ''); // Remove curly braces and quotation marks
+    var jsonContainer = document.getElementById('garbotron-json');
+    jsonContainer.textContent = jsonString;
   }
   
