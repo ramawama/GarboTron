@@ -6,14 +6,17 @@ distance = {"distance" : 0}
 percent = {"percent" : 0}
 app = Flask(__name__)
 
-# GET method for Garbotron JSON
 CORS(app)
+
+# GET /garbotron
 @app.route("/garbotron", methods=["GET"])
 def get_garbotron():
     with open('garbotron.json', 'r') as file:
         garbotron_data = json.load(file)
     return jsonify(garbotron_data)
 
+
+# GET, PUT /garbotron/distance
 @app.route("/garbotron/distance", methods=["GET", "PUT"])
 def get_distance():
     if request.method == "PUT":
@@ -26,6 +29,8 @@ def get_distance():
         return jsonify(distance)
     return jsonify({"error": "Invalid request"}), 400
 
+
+# GET, PUT /garbotron/percent
 @app.route("/garbotron/percent", methods=["GET", "PUT"])
 def get_percent():
     if request.method == "PUT":

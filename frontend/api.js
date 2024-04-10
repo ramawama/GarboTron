@@ -1,4 +1,5 @@
 
+// Gets the distance from the actuator
 function getDistance() {
     const apiUrl = 'http://127.0.0.1:5000/garbotron/distance';
     fetch(apiUrl)
@@ -17,6 +18,7 @@ function getDistance() {
       });
   }
 
+  // Gets the percent from the actuator
 function getPercent() {
     const apiUrl = 'http://127.0.0.1:5000/garbotron/percent';
     fetch(apiUrl)
@@ -35,6 +37,7 @@ function getPercent() {
       });
   }
 
+  // Gets the info on the GarboTron IOT device
   function getInfo() {
     const apiUrl = 'http://127.0.0.1:5000/garbotron';
     fetch(apiUrl)
@@ -52,6 +55,7 @@ function getPercent() {
       });
   }
 
+  // Displays the JSON data in the HTML
   function displayJson(jsonData) {
     var jsonString = JSON.stringify(jsonData, null, 2);
     jsonString = jsonString.replace(/[{},"]/g, ''); // Remove curly braces and quotation marks
