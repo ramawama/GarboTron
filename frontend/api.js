@@ -1,4 +1,4 @@
-APIURL = " https://a35c-128-227-1-41.ngrok-free.app"
+APIURL = "http://localhost:5000"
 // Gets the distance from the actuator
 function getDistance() {
     const apiUrl = APIURL + '/garbotron/distance';
@@ -11,7 +11,7 @@ function getDistance() {
       })
       .then(data => {
         const distanceElement = document.getElementById('distance');
-        distanceElement.textContent = `Distance: ${data.distance}`;
+        distanceElement.textContent = `Distance: ${data.distance}cm`;
       })
       .catch(error => {
         console.error('Fetch Error:', error);
@@ -30,7 +30,7 @@ function getPercent() {
       })
       .then(data => {
         const percentElement = document.getElementById('percent');
-        percentElement.textContent = `Percent: ${data.percent}`;
+        percentElement.textContent = `Percent: ${data.percent}%`;
       })
       .catch(error => {
         console.error('Fetch Error:', error);

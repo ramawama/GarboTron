@@ -22,7 +22,8 @@ def get_distance():
     if request.method == "PUT":
         new_data = request.get_json()
         if "distance" in new_data:
-            distance['distance'] = new_data['distance']
+            var = new_data['distance']
+            distance['distance'] = var[0:5]
             return jsonify({"message": "Updated distance"}), 200
         return jsonify({"error": "Invalid data, use \"distance\" as key"}), 400
     if request.method == "GET":
@@ -36,7 +37,8 @@ def get_percent():
     if request.method == "PUT":
         new_data = request.get_json()
         if "percent" in new_data:
-            percent['percent'] = new_data['percent']
+            var = new_data['percent']
+            percent['percent'] = var[0:4]
             return jsonify({"message": "Updated percent"}), 200
         return jsonify({"error": "Invalid data, use \"percent\" as key"}), 400
     if request.method == "GET":
