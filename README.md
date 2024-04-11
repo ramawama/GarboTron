@@ -5,12 +5,10 @@ Visionary Nexus Hub: the beginnings of humanity's foray into the next world. We 
 ### Group Members: Rama Janco, Devin DuBois, Stephen Coomes, Patrick Nguyen
 
 ## Description
-GARBOTRON
+GARBOTRON measures how full your garbage can is and sends it to a web dashboard and an LCD screen!
 
 ## IOT Device
 Our thing utilizes the ultrasonic ranging module connected to our Raspberry Pi. This device allows us to provide stable distance readings with high accuracy. We can detect distances between 2 cm and 450 cm with a precision of up to 3mm. It also utilizes an i2c LCD 1602 screen to display the results.
-### Dependencies
-### Features
 
 ## Frontend
 The frontend of our project is built using HTML, CSS, and JavaScript. Our frontend code is organized into components that encapsulate specific UI elements and functionality, promoting modularity and reusability. We encourage contributions to the frontend codebase and follow best practices for code quality and maintainability. Overall, our frontend aims to deliver a seamless and responsive user experience, powered by robust frontend technologies and practices.
