@@ -1,7 +1,7 @@
-
+APIURL = " https://a35c-128-227-1-41.ngrok-free.app"
 // Gets the distance from the actuator
 function getDistance() {
-    const apiUrl = 'http://127.0.0.1:5000/garbotron/distance';
+    const apiUrl = APIURL + '/garbotron/distance';
     fetch(apiUrl)
       .then(response => {
         if (!response.ok) {
@@ -20,7 +20,7 @@ function getDistance() {
 
   // Gets the percent from the actuator
 function getPercent() {
-    const apiUrl = 'http://127.0.0.1:5000/garbotron/percent';
+    const apiUrl = APIURL + '/garbotron/percent';
     fetch(apiUrl)
       .then(response => {
         if (!response.ok) {
@@ -39,7 +39,7 @@ function getPercent() {
 
   // Gets the info on the GarboTron IOT device
   function getInfo() {
-    const apiUrl = 'http://127.0.0.1:5000/garbotron';
+    const apiUrl = APIURL + '/garbotron';
     fetch(apiUrl)
       .then(response => {
         if (!response.ok) {
