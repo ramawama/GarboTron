@@ -1,31 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Garbotron</title>
-  </head>
-  <body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garbotron</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f7f7f7;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 5px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    #distance, #percent {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
     <h1>Garbotron Details</h1>
 
-    <button onclick="goToIndexPage()">Garbotron Info</button>
-    <p></p>
     <button onclick="callGetPercent()">Get Percent</button>
-    <p id="percent">Percent: 0%</p>
     <button onclick="callGetDistance()">Get Distance</button>
-    <p id="distance">Distance: 0cm</p>
-    <script src="api.js"></script>
+    <button onclick="callGetBoth()">Get Distance and Percent</button>
+    <p id="distance">Distance:</p>
+    <p id="percent">Percent:</p>
 
-    <script>
-      function callGetPercent() {
-        getPercent();
-      }
-      function callGetDistance() {
-        getDistance();
-      }
-      function goToIndexPage() {
-        window.location.href = "index.html";
-      }
-    </script>
-  </body>
+    <button onclick="goToIndexPage()">Back to Home</button>
+  </div>
+
+  <script src="api.js"></script>
+
+  <script>
+    function callGetPercent() {
+      getPercent();
+    }
+    function callGetDistance() {
+      getDistance();
+    }
+    function callGetBoth() {
+      getDistance();
+      getPercent();
+    }
+    function goToIndexPage() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
 </html>
